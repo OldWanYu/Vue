@@ -1,0 +1,69 @@
+<script language="JScript" runat="Server">
+	function toObject(json) 
+	{    
+		eval("var o=" + json);    
+		return o;
+	}
+</script>
+
+	'读取bookid，章节序号
+	src_="http://topenapi.tadu.com:8098/api/getUpdateInfo"
+	strPost_="key=" & key
+	strPost_=strPost_ & "&cpid=" & rs("view_id")
+	strPost_=strPost_ & "&copyrightid=000"
+	set Http=server.createobject("MSXML2.XMLHTTP")
+	Http.open "Post",src_ ,false
+	Http.setRequestHeader "Content-Type", "text/plain"
+	Http.send strPost_
+	result=Http.responseText
+	Response.write result & "--章节</br>"
+	json_str=result
+
+ 	Set json = toObject(json_str)
+	error_code=json.code
+	bookid=json.result.bookid
+	xuhao=json.result.chapternum
+	Set json = Nothing
+
+	'推送书目
+	strPost_= "key=" & key
+	strPost_=strPost_ & "&cpid=" & rs("ID")
+	strPost_=strPost_ & "&Copyrightid=131"
+	strPost_=strPost_ & "&coverimage=http://book.sujinyc.com" & rs("list_pic")
+	strPost_=strPost_ & "&bookname=" & rs("list_name")
+	strPost_=strPost_ & "&authorname=" & rs("list_user")
+	strPost_=strPost_ & "&intro=" & ccHtmlEnCode(rs("list_all"))
+	strPost_=strPost_ & "&classid=" & GetClassID(rs("list_class"))
+	if rs("list_tai")=6 then '--连载状态。连载 1连载 0全本 
+		strPost_=strPost_ & "&serial=0" 
+	else
+		strPost_=strPost_ & "&serial=1"
+	end if
+	strPost_=strPost_ & "&isvip=1"
+	strPost_=strPost_ & "&url=http://book.*****.com/look_book.asp?id=" & rs("ID")
+	'response.write strPost_
+		
+	src_="http://topenapi.tadu.com:8098/api/addBook"
+	set Https=server.createobject("MSXML2.XMLHTTP")
+	Https.open "Post",src_ ,false
+	Https.setRequestHeader "Content-Type", "text/plain"
+	Https.send strPost_
+	result=Https.responseText
+
+	'推送章节
+	src_="http://topenapi.tadu.com:8098/api/addChapter"
+	strPost_= "key=" & key
+	strPost_=strPost_ & "&bookid=" & bookid
+	strPost_=strPost_ & "&copyrightid=000"
+	strPost_=strPost_ & "&title=" & rs("view_type")	'章节名称
+	strPost_=strPost_ & "&content=" & ccHtmlEnCode(rs("view_ok2"))
+	strPost_=strPost_ & "&chapternum=" & xuhao+1  
+	strPost_=strPost_ & "&isvip=" & rs("view_isVip")
+	strPost_=strPost_ & "&chapterid=" & rs("ID")
+	strPost_=strPost_ & "&updatemode=1"
+		
+	set Httpss=server.createobject("MSXML2.XMLHTTP")
+	Httpss.open "Post",src_ ,false
+	Httpss.setRequestHeader "Content-Type", "text/plain"
+	Httpss.send strPost_
+	result=Httpss.responseText

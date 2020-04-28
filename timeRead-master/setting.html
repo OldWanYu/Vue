@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no, email=no" />
+		<meta name="screen-orientation" content="portrait">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-orientation" content="portrait">
+		<meta name="x5-fullscreen" content="true">
+		<meta name="msapplication-tap-highlight" content="no">
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta content="dahuotu" name="author" />
+		<title>设置</title>
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="Stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/app.css" />
+		<script type="text/javascript" src="js/flexible.js"></script>
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body>
+		<header>
+			设置
+		</header>
+		<div style="height: 1.1rem;"></div>
+		<div class="form" id="appform">
+			<h2>风格</h2>
+			<ul class="tag">
+				<template v-for="item in backGround">
+					<li v-if="chk_backGround==item.color" class="li-chk" @click="setbackGround(item.color)">{{item.name}}</li>
+					<li v-else="" @click="setbackGround(item.color)">{{item.name}}</li>
+				</template>
+			</ul>
+			<hr>
+			<h2>字体</h2>
+			<ul class="tag">
+				<template v-for="item in fontFamily">
+					<li v-if="chk_fontFamily==item.family" class="li-chk" @click="setFontFamily(item.family)">{{item.name}}</li>
+					<li v-else="" @click="setFontFamily(item.family)">{{item.name}}</li>
+				</template>
+			</ul>
+			<hr>
+			<h2>字体颜色</h2>
+			<ul class="tag">
+				<template v-for="item in fontColor">
+					<li v-if="chk_fontColor==item.color" class="li-chk" @click="setFontColor(item.color)">{{item.name}}</li>
+					<li v-else="" @click="setFontColor(item.color)">{{item.name}}</li>
+				</template>
+			</ul>
+			<hr>
+			<h2>字体大小</h2>
+			<ul class="tag">
+				<template v-for="item in fontSize">
+					<li v-if="chk_fontSize==item.size" class="li-chk" @click="setFontSize(item.size)">{{item.name}}</li>
+					<li v-else="" @click="setFontSize(item.size)">{{item.name}}</li>
+				</template>
+			</ul>
+		</div>
+		<div style="height: 1.1rem;"></div>
+		<footer>
+			<div class="nav-flex">
+				<div class="li" onclick="location.href='index.html'">
+					<div class="img">搜</div>
+					<div class="tips">搜小说</div>
+				</div>
+				<div class="li" onclick="location.href='list.html'">
+					<div class="img">架</div>
+					<div class="tips">书架</div>
+				</div>
+				<div class="li" onclick="location.href='setting.html'">
+					<div class="img img-chk">设</div>
+					<div class="tips">设置</div>
+				</div>
+			</div>
+		</footer>
+	</body>
+	<script type="text/javascript" src="js/layer.m/layer.min.js"></script>
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script>
+		window.onload = function() {
+			app.loadStyle();
+		}
+
+		var app = new Vue({
+			el: '#appform',
+			data: {
+				"chk_fontSize": "0.28rem",
+				"fontSize": [{
+						"size": "0.28rem",
+						"name": "默认"
+					},
+					{
+						"size": "0.36rem",
+						"name": "超大"
+					},
+					{
+						"size": "0.32rem",
+						"name": "大"
+					},
+					{
+						"size": "0.24rem",
+						"name": "中"
+					},
+					{
+						"size": "0.22rem",
+						"name": "小"
+					},
+					{
+						"size": "0.2rem",
+						"name": "超小"
+					}
+				],
+				"chk_fontColor": "000",
+				"fontColor": [{
+						"color": "000",
+						"name": "默认"
+					},
+					{
+						"color": "9370DB",
+						"name": "暗紫"
+					},
+					{
+						"color": "2E8B57",
+						"name": "藻绿"
+					},
+					{
+						"color": "2F4F4F",
+						"name": "深灰"
+					},
+					{
+						"color": "800000",
+						"name": "栗色"
+					},
+					{
+						"color": "6A5ACD",
+						"name": "青蓝"
+					},
+					{
+						"color": "BC8F8F",
+						"name": "玫褐"
+					},
+					{
+						"color": "F4A460",
+						"name": "黄褐"
+					},
+					{
+						"color": "F5F5DC",
+						"name": "米色"
+					},
+					{
+						"color": "F5F5F5",
+						"name": "雾白"
+					}
+				],
+				"chk_fontFamily": "方正启体简体",
+				"fontFamily": [{
+						"family": "方正启体简体",
+						"name": "默认"
+					},
+					{
+						"family": "宋体",
+						"name": "宋体"
+					},
+					{
+						"family": "黑体",
+						"name": "黑体"
+					},
+					{
+						"family": "楷体_GB2312",
+						"name": "楷体"
+					},
+					{
+						"family": "微软雅黑",
+						"name": "微软雅黑"
+					}
+				],
+				"chk_backGround": "f5f5f5",
+				"backGround": [{
+						"color": "f5f5f5",
+						"name": "默认"
+					},
+					{
+						"color": "000",
+						"name": "夜间"
+					},
+					{
+						"color": "fff",
+						"name": "白昼"
+					}
+				],
+			},
+			methods: {
+				loadStyle: function() {
+					app.chk_fontSize = localStorage.getItem("font-size");
+					app.chk_fontColor = localStorage.getItem("color");
+					app.chk_fontFamily = localStorage.getItem("font-family");
+					app.chk_backGround = localStorage.getItem("background");
+				},
+				setFontSize: function(ft) {
+					app.chk_fontSize = ft;
+					app.saveAllStyle();
+				},
+				setFontColor: function(co) {
+					app.chk_fontColor = co;
+					app.saveAllStyle();
+				},
+				setFontFamily: function(fm) {
+					app.chk_fontFamily = fm;
+					app.saveAllStyle();
+				},
+				setbackGround: function(bg) {
+					app.chk_backGround = bg;
+					app.saveAllStyle();
+				},
+				saveAllStyle: function() {
+					localStorage.setItem('background', app.chk_backGround);
+					localStorage.setItem('font-family', app.chk_fontFamily);
+					localStorage.setItem('font-size', app.chk_fontSize);
+					localStorage.setItem('color', app.chk_fontColor);
+					localStorage.setItem('configStyle', 'background: #' + app.chk_backGround + ';color: #' + app.chk_fontColor + ';font-size: ' + app.chk_fontSize + ';font-family: "' + app.chk_fontFamily + '";')
+				},
+			}
+		});
+	</script>
+
+</html>
